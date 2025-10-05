@@ -6,8 +6,8 @@
     <title>El Pequeño Explorador</title>
     
     <!-- Ícono para el iPad y navegadores -->
-    <link rel="apple-touch-icon" href="gratis-png-leon-leon-thumbnail.png">
-    <link rel="icon" href="gratis-png-leon-leon-thumbnail.png">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjZjU5ZTBiIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMjUiIGZpbGw9IiNmZWQ3YWEiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjQ1IiByPSI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNDUiIHI9IjQiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTQ1IDYwIHE1IDUgMTAgMCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNNTAgNTIgdiA4IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==">
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjZjU5ZTBiIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMjUiIGZpbGw9IiNmZWQ3YWEiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjQ1IiByPSI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNDUiIHI9IjQiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTQ1IDYwIHE1IDUgMTAgMCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNNTAgNTIgdiA4IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,9 +76,8 @@
 
     <div id="app-container" class="max-w-4xl mx-auto p-4 md:p-8">
 
-        <!-- Pantalla de Bienvenida -->
         <div id="welcome-screen" class="screen active-screen text-center">
-             <div class="flex justify-center mb-4">
+            <div class="flex justify-center mb-4">
                  <svg class="w-40 h-40" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <g transform="translate(100 100)">
                         <path d="M51.9,-41.7C65.3,-26.1,72.7,-2.1,69.2,20.1C65.7,42.4,51.3,62.8,32,70.1C12.7,77.4,-11.5,71.6,-32.1,60.5C-52.7,49.4,-69.7,33,-75.2,12.7C-80.7,-7.6,-74.6,-31.8,-60.7,-46.8C-46.8,-61.8,-24.9,-67.7,-3.9,-65.8C17.1,-63.9,38.4,-57.2,51.9,-41.7Z" fill="#f59e0b" transform="scale(1.1)"></path>
@@ -95,27 +94,21 @@
                 📖 Lectura del Día
             </button>
             <p class="text-lg md:text-xl text-gray-600 mb-8">¡Hola! Soy Leo. ¡Vamos a aprender juntos, bloque por bloque!</p>
-            <div id="blocks-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Los bloques se generarán aquí -->
-            </div>
+            <div id="blocks-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
         </div>
-
-        <!-- Pantalla de Temas del Bloque -->
+        
         <div id="block-view-screen" class="screen">
             <button onclick="renderWelcomeScreen()" class="mb-6 bg-amber-500 text-white py-2 px-4 rounded-lg shadow hover:bg-amber-600 transition">← Volver a los Bloques</button>
             <h1 id="block-title" class="text-3xl md:text-5xl text-blue-600 mb-2 text-center"></h1>
             <p id="daily-message" class="text-center text-lg text-gray-600 mb-8"></p>
-            <div id="topics-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <!-- Los temas se generarán aquí -->
-            </div>
-             <div id="quiz-button-container" class="mt-8 text-center hidden">
+            <div id="topics-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"></div>
+            <div id="quiz-button-container" class="mt-8 text-center hidden">
                 <button id="start-block-quiz-btn" class="main-button bg-green-500 text-white text-xl font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600">
                     ¡Evaluación Final del Bloque!
                 </button>
             </div>
         </div>
 
-        <!-- Pantalla de Lección -->
         <div id="lesson-screen" class="screen">
             <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
                 <h2 id="lesson-title" class="text-2xl md:text-4xl text-blue-600 mb-6"></h2>
@@ -128,7 +121,6 @@
             </div>
         </div>
         
-        <!-- Pantalla de Cuestionario (de Lección y Final) -->
         <div id="quiz-screen" class="screen">
              <h1 id="quiz-main-title" class="text-3xl md:text-5xl text-center text-green-600 mb-2"></h1>
              <p id="quiz-topic-title" class="text-center text-lg text-gray-500 mb-4"></p>
@@ -139,13 +131,12 @@
                 <div id="quiz-question-container" class="flex items-center justify-center gap-x-4">
                     <p id="quiz-question" class="text-xl md:text-3xl mb-8 min-h-[80px]"></p>
                 </div>
-                <div id="quiz-image-container" class="flex justify-center mb-6 w-full max-w-sm mx-auto"></div>
+                <div id="quiz-image-container" class="flex justify-center mb-6"></div>
                 <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 <button id="quiz-next-btn" class="hidden mt-8 main-button bg-blue-500 text-white text-lg font-bold py-3 px-8 rounded-full hover:bg-blue-600">Siguiente Pregunta</button>
             </div>
         </div>
 
-        <!-- Pantalla de Lectura Diaria -->
         <div id="reading-screen" class="screen">
             <button onclick="renderWelcomeScreen()" class="mb-6 bg-purple-500 text-white py-2 px-4 rounded-lg shadow hover:bg-purple-600 transition">← Volver al Inicio</button>
             <div id="reading-content-wrapper">
@@ -155,6 +146,9 @@
                     <div id="reading-image" class="mb-4"></div>
                     <div class="flex items-start gap-x-4">
                         <p id="reading-text" class="text-xl md:text-2xl leading-relaxed flex-grow"></p>
+                        <button id="reading-speak-btn" class="speak-btn">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                        </button>
                     </div>
                     <button id="start-reading-quiz-btn" class="mt-8 w-full main-button bg-green-500 text-white text-lg font-bold py-3 px-8 rounded-full hover:bg-green-600">¡Comprobar lectura!</button>
                 </div>
@@ -165,7 +159,6 @@
             </div>
         </div>
 
-        <!-- Pantallas de Resultados y Proyectos -->
         <div id="results-screen" class="screen text-center">
             <h1 class="text-4xl md:text-6xl text-amber-500 mb-4">¡Excelente Trabajo!</h1>
             <p class="text-xl md:text-2xl mb-6">Has completado el cuestionario del <span id="results-block-name" class="font-bold"></span>.</p>
@@ -179,6 +172,7 @@
                  <button onclick="renderWelcomeScreen()" class="main-button bg-amber-500 text-white text-lg font-bold py-3 px-6 rounded-full hover:bg-amber-600">Volver al Inicio</button>
             </div>
         </div>
+        
         <div id="projects-screen" class="screen">
             <button id="back-to-results" class="mb-6 bg-amber-500 text-white py-2 px-4 rounded-lg shadow hover:bg-amber-600 transition">← Volver a Resultados</button>
             <h1 class="text-3xl md:text-5xl text-purple-600 mb-6 text-center">Proyecto y Actividades</h1>
@@ -190,7 +184,6 @@
             </div>
         </div>
         
-        <!-- Modales -->
         <div id="activity-modal" class="modal">
              <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4">
                 <div class="text-6xl mb-4">🖐️</div>
@@ -202,11 +195,10 @@
     </div>
 
     <script>
-    // --- DATABASE & STATE ---
-    const DB_NAME = 'pequenoExploradorProgress_v3'; // Increased version to avoid conflicts
+    const DB_NAME = 'pequenoExploradorProgress_v3';
     const createSVG = (bgColor, textColor, textContent, width = 400, height = 200) => {
-        return `<svg class="rounded-lg" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-            <rect width="${width}" height="${height}" fill="${bgColor}" rx="10"></rect>
+        return `<svg class="rounded-lg w-full h-auto" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="${bgColor}" rx="10"></rect>
             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="${height / 2.5}" fill="${textColor}" font-family="Fredoka One, cursive">${textContent}</text>
         </svg>`;
     };
@@ -294,7 +286,6 @@
         },
         ...[2,3,4,5,6,7,8].map(i => ({ block: i, title: `Bloque ${i}`, colors: { bg: 'bg-gray-400', hover: 'hover:bg-gray-500' }, topics: [], project: null })),
     ];
-
     const dailyReadings = [
         { id: 'r1', title: 'El Sol y la Luna', text: 'El Sol sale de día. La Luna sale de noche. El Sol es amarillo y brillante. La Luna es blanca y redonda. Juegan a las escondidas en el cielo.', image: createSVG('#f3f4f6', '#1f2937', '☀️ 🌙'), 
           quiz: [ { prompt: '¿Quién sale de día?', options: ['La Luna', 'El Sol', 'Una estrella'], answer: 'El Sol' }]
@@ -303,7 +294,6 @@
           quiz: [ { prompt: '¿De qué color es Tito?', options: ['Negro', 'Blanco', 'Café'], answer: 'Café' }]
         },
     ];
-
     let appState = {
         currentScreen: 'welcome-screen',
         currentBlock: null,
@@ -311,7 +301,7 @@
         currentStep: 0,
         quizState: {},
         currentReading: null,
-        quizContext: null, // 'lesson', 'reading', or 'block'
+        quizContext: null,
     };
     let progress = {
         unlockedBlock: 1,
@@ -320,8 +310,8 @@
         completedReadings: [],
         lastReadingDate: null
     };
-    
-    // --- PROGRESS MANAGEMENT ---
+    let bestSpanishVoice = null;
+
     function saveProgress() { localStorage.setItem(DB_NAME, JSON.stringify(progress)); }
     function loadProgress() {
         const saved = localStorage.getItem(DB_NAME);
@@ -333,7 +323,6 @@
             }
         }
     }
-
     function canStartNewLesson() {
         const today = new Date().toISOString().slice(0, 10);
         if (progress.lessonsCompletedToday.date !== today) {
@@ -341,19 +330,16 @@
         }
         return progress.lessonsCompletedToday.count < 3;
     }
-
     function canStartNewReading() {
         const today = new Date().toISOString().slice(0, 10);
         return progress.lastReadingDate !== today;
     }
-    
     function markTopicAsCompleted(topicId) {
         if (!progress.completedTopics.includes(topicId)) {
             progress.completedTopics.push(topicId);
             saveProgress();
         }
     }
-
     function checkAndUnlockNextBlock() {
         const blockData = learningData.find(b => b.block === appState.currentBlock);
         if (!blockData || !blockData.topics) return;
@@ -365,32 +351,41 @@
             saveProgress();
         }
     }
-
-    // --- SPEECH & NAVIGATION ---
-    let mexicoVoice = null;
     function loadVoices() {
         const voices = speechSynthesis.getVoices();
-        mexicoVoice = voices.find(v => v.lang === 'es-MX' && v.name.includes('Google') || v.lang === 'es-US') || voices.find(v => v.lang.startsWith('es-'));
+        if (!voices.length) return;
+        bestSpanishVoice = 
+            voices.find(v => v.lang === 'es-MX' && v.name === 'Paulina') ||
+            voices.find(v => v.lang === 'es-ES' && v.name === 'Mónica') ||
+            voices.find(v => v.lang === 'es-MX' && v.name.includes('Google')) ||
+            voices.find(v => v.lang === 'es-US' && v.name.includes('Google')) ||
+            voices.find(v => v.lang === 'es-MX') ||
+            voices.find(v => v.lang.startsWith('es-'));
     }
-    speechSynthesis.onvoiceschanged = loadVoices;
-
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadVoices;
+    }
     function stopSpeaking() {
         if (speechSynthesis.speaking) {
             speechSynthesis.cancel();
         }
     }
-
     function speakText(text) {
         stopSpeaking();
+        if (bestSpanishVoice === null) {
+            loadVoices();
+        }
         try {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'es-MX';
-            utterance.rate = 1.15;
-            if (mexicoVoice) utterance.voice = mexicoVoice;
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0; 
+            if (bestSpanishVoice) {
+                utterance.voice = bestSpanishVoice;
+            }
             speechSynthesis.speak(utterance);
         } catch (error) { console.error("Error en la síntesis de voz:", error); }
     }
-    
     function navigateTo(screenId) {
         stopSpeaking();
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -398,86 +393,13 @@
         appState.currentScreen = screenId;
         window.scrollTo(0, 0);
     }
-
-    // --- RENDER FUNCTIONS ---
     function renderWelcomeScreen() {
-        document.getElementById('daily-reading-btn').onclick = showDailyReading;
-        const container = document.getElementById('blocks-container');
-        container.innerHTML = '';
-        learningData.forEach(blockData => {
-            const isLocked = blockData.block > progress.unlockedBlock;
-            const button = document.createElement('button');
-            button.className = `main-button p-4 md:p-6 rounded-2xl text-white font-bold text-lg md:text-xl shadow-lg flex flex-col items-center justify-center aspect-square relative ${isLocked ? 'bg-gray-500 cursor-not-allowed' : blockData.colors.bg + ' ' + blockData.colors.hover}`;
-            button.innerHTML = `<span>Bloque ${blockData.block}</span><span class="text-sm font-normal text-center">${blockData.title}</span>`;
-            button.disabled = isLocked;
-            button.onclick = () => showBlockView(blockData.block);
-
-            if (isLocked) {
-                button.innerHTML += `<div class="locked-overlay">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
-                </div>`;
-            }
-            container.appendChild(button);
-        });
         navigateTo('welcome-screen');
     }
-
     function showBlockView(blockId) {
         appState.currentBlock = blockId;
-        const blockData = learningData.find(b => b.block === blockId);
-        document.getElementById('block-title').textContent = `Bloque ${blockData.block}: ${blockData.title}`;
-        
-        const lessonStatus = canStartNewLesson();
-        const lessonsDoneToday = progress.lessonsCompletedToday.date === new Date().toISOString().slice(0, 10) ? progress.lessonsCompletedToday.count : 0;
-        document.getElementById('daily-message').textContent = lessonStatus
-            ? `¡Elige tu lección! Puedes hacer ${3 - lessonsDoneToday} más hoy.`
-            : '¡Gran trabajo hoy! Has completado tus 3 lecciones. Vuelve mañana.';
-
-        const container = document.getElementById('topics-container');
-        container.innerHTML = '';
-        let completedInBlock = 0;
-        
-        blockData.topics.forEach(topic => {
-            const isCompleted = progress.completedTopics.includes(topic.id);
-            if(isCompleted) completedInBlock++;
-
-            const canBeStarted = lessonStatus || isCompleted;
-            const isLockedToday = !canBeStarted;
-
-            const button = document.createElement('button');
-            button.className = `p-4 rounded-xl shadow text-left flex items-center space-x-4 transition relative ${isLockedToday && !isCompleted ? 'bg-gray-200 cursor-not-allowed' : 'bg-white cursor-pointer transform hover:scale-105'}`;
-            button.disabled = isLockedToday && !isCompleted;
-            button.onclick = () => showLesson(topic.id);
-
-            let subjectColor = 'text-blue-500';
-            if (topic.subject === 'Español') subjectColor = 'text-green-500';
-            if (topic.subject === 'Ciencias') subjectColor = 'text-amber-500';
-
-            button.innerHTML = `
-                <div class="text-4xl">${topic.icon}</div>
-                <div class="flex-grow">
-                    <p class="font-bold text-lg">${topic.title}</p>
-                    <p class="text-sm ${subjectColor}">${topic.subject}</p>
-                </div>
-                ${isCompleted ? '<div class="text-3xl text-green-500">✅</div>' : ''}
-            `;
-            if (isLockedToday && !isCompleted) {
-                 button.innerHTML += `<div class="locked-overlay" style="background-color: rgba(229, 231, 235, 0.8);">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>`;
-            }
-            container.appendChild(button);
-        });
-
-        if (completedInBlock === blockData.topics.length && blockData.topics.length > 0) {
-            document.getElementById('quiz-button-container').classList.remove('hidden');
-        } else {
-            document.getElementById('quiz-button-container').classList.add('hidden');
-        }
-
         navigateTo('block-view-screen');
     }
-
     function showLesson(topicId) {
         if (!progress.completedTopics.includes(topicId) && !canStartNewLesson()) return;
         appState.currentTopicId = topicId;
@@ -485,7 +407,6 @@
         renderLessonStep();
         navigateTo('lesson-screen');
     }
-
     function renderLessonStep() {
         const blockData = learningData.find(b => b.block === appState.currentBlock);
         if (!blockData) return;
@@ -510,7 +431,7 @@
         </div>`;
         
         if (stepData.image) {
-            html += `<div class="mt-4 w-full max-w-md mx-auto">${stepData.image}</div>`;
+            html += `<div class="mt-4">${stepData.image}</div>`;
         }
        
         contentEl.innerHTML = html;
@@ -535,42 +456,29 @@
             }, 100);
         }
     }
-
-    // --- READING, QUIZ, and RETRY LOGIC ---
     function showDailyReading() {
         if (canStartNewReading()) {
             const nextReading = dailyReadings.find(r => !progress.completedReadings.includes(r.id));
             if (nextReading) {
                 appState.currentReading = nextReading;
-                document.getElementById('reading-title').textContent = nextReading.title;
-                document.getElementById('reading-text').textContent = nextReading.text;
-                document.getElementById('reading-image').innerHTML = `<div class="w-full max-w-md mx-auto">${nextReading.image}</div>`;
-                document.getElementById('start-reading-quiz-btn').onclick = () => startReadingQuiz(nextReading);
-                document.getElementById('reading-content-wrapper').classList.remove('hidden');
-                document.getElementById('reading-unavailable').classList.add('hidden');
+                navigateTo('reading-screen');
             } else {
-                document.getElementById('reading-content-wrapper').classList.add('hidden');
-                document.getElementById('reading-unavailable').classList.remove('hidden');
+                navigateTo('reading-screen');
                 document.getElementById('reading-unavailable').querySelector('p').textContent = "¡Has completado todas las lecturas disponibles. ¡Felicidades!";
             }
         } else {
-            document.getElementById('reading-content-wrapper').classList.add('hidden');
-            document.getElementById('reading-unavailable').classList.remove('hidden');
+            navigateTo('reading-screen');
         }
-        navigateTo('reading-screen');
     }
-
     function startLessonQuiz(topicId) {
         const topic = learningData.find(b => b.block === appState.currentBlock).topics.find(t => t.id === topicId);
         appState.quizContext = 'lesson';
         startQuiz(topic.lessonQuiz, `Evaluación: ${topic.title}`);
     }
-
     function startReadingQuiz(reading) {
         appState.quizContext = 'reading';
         startQuiz(reading.quiz, `Comprensión: ${reading.title}`);
     }
-
     function startBlockQuiz() {
         const blockData = learningData.find(b => b.block === appState.currentBlock);
         let allQuestions = [];
@@ -583,10 +491,8 @@
         appState.quizContext = 'block';
         startQuiz(allQuestions, `Evaluación Final: Bloque ${blockData.block}`);
     }
-    
     function startQuiz(questions, title, isRetry = false) {
         document.getElementById('quiz-main-title').textContent = title;
-        
         if (!isRetry) {
              appState.quizState = {
                 questions: [...questions],
@@ -597,34 +503,23 @@
                 isRetry: false
             };
         }
-        
         if (!questions || questions.length === 0) {
             console.error("Quiz started with no questions for:", title);
             return;
         }
-
         renderQuizQuestion();
         navigateTo('quiz-screen');
     }
-
     function renderQuizQuestion() {
         const { questions, currentQuestionIndex, totalQuestions } = appState.quizState;
         const questionData = questions[currentQuestionIndex];
         
-        document.getElementById('quiz-topic-title').textContent = questionData.topicTitle || '';
-        document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
-        
         const fullTextToRead = `${questionData.prompt}. Las opciones son: ${questionData.options.join(', ')}`;
-
-        const questionContainer = document.getElementById('quiz-question-container');
-        questionContainer.innerHTML = `<p id="quiz-question" class="text-xl md:text-3xl min-h-[80px] flex-grow">${questionData.prompt}</p>
+        document.getElementById('quiz-question-container').innerHTML = `<p id="quiz-question" class="text-xl md:text-3xl min-h-[80px] flex-grow">${questionData.prompt}</p>
         <button onclick="speakText(\`${fullTextToRead.replace(/`/g, "'")}\`)" class="speak-btn mb-8" aria-label="Escuchar de nuevo">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
         </button>`;
 
-        const imageContainer = document.getElementById('quiz-image-container');
-        imageContainer.innerHTML = questionData.image || '';
-        
         const optionsContainer = document.getElementById('quiz-options');
         optionsContainer.innerHTML = '';
         questionData.options.forEach(option => {
@@ -634,21 +529,17 @@
             optionEl.onclick = () => selectQuizOption(optionEl, option, questionData.answer);
             optionsContainer.appendChild(optionEl);
         });
-
         document.getElementById('quiz-next-btn').classList.add('hidden');
-
         setTimeout(() => {
             speakText(fullTextToRead);
         }, 100);
     }
-
     function selectQuizOption(optionEl, selectedAnswer, correctAnswer) {
         stopSpeaking();
         document.querySelectorAll('#quiz-options button').forEach(btn => {
             btn.disabled = true;
             if(btn.textContent === correctAnswer) btn.classList.add('correct');
         });
-
         if (selectedAnswer === correctAnswer) {
             appState.quizState.score++;
         } else {
@@ -656,10 +547,8 @@
             const currentQuestion = appState.quizState.questions[appState.quizState.currentQuestionIndex];
             appState.quizState.incorrectlyAnswered.push(currentQuestion);
         }
-        
         document.getElementById('quiz-next-btn').classList.remove('hidden');
     }
-
     function nextQuizQuestion() {
         appState.quizState.currentQuestionIndex++;
         const { currentQuestionIndex, totalQuestions, incorrectlyAnswered, isRetry } = appState.quizState;
@@ -667,7 +556,6 @@
         if (currentQuestionIndex < totalQuestions) {
             renderQuizQuestion();
         } else {
-            // Quiz is over, check for retry or completion
             if (incorrectlyAnswered.length > 0 && !isRetry) {
                 alert('¡Vamos a repasar! Responde de nuevo las preguntas que se te dificultaron.');
                 appState.quizState = {
@@ -681,16 +569,13 @@
                 };
                 renderQuizQuestion();
             } else {
-                // Final completion logic
                 handleQuizCompletion();
             }
         }
     }
-
     function handleQuizCompletion() {
         const { score, totalQuestions } = appState.quizState;
         const success = appState.quizContext === 'block' ? true : (score === totalQuestions);
-
         if (appState.quizContext === 'lesson') {
             if (success) {
                 showActivityModal();
@@ -709,58 +594,21 @@
                  alert('Parece que algunas respuestas no fueron correctas. ¡Vamos a intentarlo de nuevo!');
                  startReadingQuiz(appState.currentReading);
             }
-        } else { // 'block' context
+        } else {
              showResults();
         }
     }
-
     function showActivityModal() {
         const topic = learningData.find(b => b.block === appState.currentBlock).topics.find(t => t.id === appState.currentTopicId);
-        document.getElementById('activity-modal-text').textContent = topic.activity;
         document.getElementById('activity-modal').classList.add('flex');
-        document.getElementById('activity-confirm-btn').onclick = () => {
-            document.getElementById('activity-modal').classList.remove('flex');
-            progress.lessonsCompletedToday.count++;
-            markTopicAsCompleted(appState.currentTopicId);
-            checkAndUnlockNextBlock();
-            showBlockView(appState.currentBlock);
-        };
     }
-
     function showResults() {
-        const { score, totalQuestions } = appState.quizState;
-        const currentBlockNumber = appState.currentBlock;
-        document.getElementById('results-block-name').textContent = `Bloque ${currentBlockNumber}`;
-        document.getElementById('final-score').textContent = `${score}/${totalQuestions}`;
-        
-        const percentage = totalQuestions > 0 ? (score / totalQuestions) * 100 : 0;
-        let message = '';
-        if (percentage >= 80) message = '¡Eres una superestrella del conocimiento!';
-        else if (percentage >= 50) message = '¡Buen trabajo! Sigue practicando.';
-        else message = '¡No te preocupes! Repasar es parte de aprender. ¡Tú puedes!';
-        document.getElementById('final-message').textContent = message;
-        speakText(`¡Excelente trabajo! Tu puntuación final es ${score} de ${totalQuestions}. ${message}`);
-
         navigateTo('results-screen');
     }
-    
     function showProjects() {
-        const blockData = learningData.find(b => b.block === appState.currentBlock);
-        if (!blockData || !blockData.project) return;
-        
-        document.getElementById('project-title').textContent = blockData.project.title;
-        document.getElementById('project-description').textContent = blockData.project.description;
-        const materialsList = document.getElementById('project-materials');
-        materialsList.innerHTML = '';
-        blockData.project.materials.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item;
-            materialsList.appendChild(li);
-        });
         navigateTo('projects-screen');
     }
 
-    // --- INIT ---
     document.addEventListener('DOMContentLoaded', () => {
         loadVoices();
         loadProgress();
@@ -777,9 +625,21 @@
                 renderLessonStep();
             }
         };
+
+        const activityConfirmBtn = document.getElementById('activity-confirm-btn');
+        if(activityConfirmBtn) {
+            activityConfirmBtn.onclick = () => {
+                document.getElementById('activity-modal').classList.remove('flex');
+                progress.lessonsCompletedToday.count++;
+                markTopicAsCompleted(appState.currentTopicId);
+                checkAndUnlockNextBlock();
+                showBlockView(appState.currentBlock);
+            };
+        }
     });
     </script>
 </body>
 </html>
+
 
 
