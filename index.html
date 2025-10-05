@@ -393,13 +393,83 @@
         appState.currentScreen = screenId;
         window.scrollTo(0, 0);
     }
+    
     function renderWelcomeScreen() {
+        const container = document.getElementById('blocks-container');
+        container.innerHTML = '';
+        learningData.forEach(blockData => {
+            const isLocked = blockData.block > progress.unlockedBlock;
+            const button = document.createElement('button');
+            button.className = `main-button p-4 md:p-6 rounded-2xl text-white font-bold text-lg md:text-xl shadow-lg flex flex-col items-center justify-center aspect-square relative ${isLocked ? 'bg-gray-500 cursor-not-allowed' : blockData.colors.bg + ' ' + blockData.colors.hover}`;
+            button.innerHTML = `<span>Bloque ${blockData.block}</span><span class="text-sm font-normal text-center">${blockData.title}</span>`;
+            button.disabled = isLocked;
+            button.onclick = () => showBlockView(blockData.block);
+
+            if (isLocked) {
+                button.innerHTML += `<div class="locked-overlay">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                </div>`;
+            }
+            container.appendChild(button);
+        });
         navigateTo('welcome-screen');
     }
+
     function showBlockView(blockId) {
         appState.currentBlock = blockId;
+        const blockData = learningData.find(b => b.block === blockId);
+        document.getElementById('block-title').textContent = `Bloque ${blockData.block}: ${blockData.title}`;
+        
+        const lessonStatus = canStartNewLesson();
+        const lessonsDoneToday = progress.lessonsCompletedToday.date === new Date().toISOString().slice(0, 10) ? progress.lessonsCompletedToday.count : 0;
+        document.getElementById('daily-message').textContent = lessonStatus
+            ? `¡Elige tu lección! Puedes hacer ${3 - lessonsDoneToday} más hoy.`
+            : '¡Gran trabajo hoy! Has completado tus 3 lecciones. Vuelve mañana.';
+
+        const container = document.getElementById('topics-container');
+        container.innerHTML = '';
+        let completedInBlock = 0;
+        
+        blockData.topics.forEach(topic => {
+            const isCompleted = progress.completedTopics.includes(topic.id);
+            if(isCompleted) completedInBlock++;
+
+            const canBeStarted = lessonStatus || isCompleted;
+            const isLockedToday = !canBeStarted;
+
+            const button = document.createElement('button');
+            button.className = `p-4 rounded-xl shadow text-left flex items-center space-x-4 transition relative ${isLockedToday && !isCompleted ? 'bg-gray-200 cursor-not-allowed' : 'bg-white cursor-pointer transform hover:scale-105'}`;
+            button.disabled = isLockedToday && !isCompleted;
+            button.onclick = () => showLesson(topic.id);
+
+            let subjectColor = 'text-blue-500';
+            if (topic.subject === 'Español') subjectColor = 'text-green-500';
+            if (topic.subject === 'Ciencias') subjectColor = 'text-amber-500';
+
+            button.innerHTML = `
+                <div class="text-4xl">${topic.icon}</div>
+                <div class="flex-grow">
+                    <p class="font-bold text-lg">${topic.title}</p>
+                    <p class="text-sm ${subjectColor}">${topic.subject}</p>
+                </div>
+                ${isCompleted ? '<div class="text-3xl text-green-500">✅</div>' : ''}
+            `;
+            if (isLockedToday && !isCompleted) {
+                 button.innerHTML += `<div class="locked-overlay" style="background-color: rgba(229, 231, 235, 0.8);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>`;
+            }
+            container.appendChild(button);
+        });
+
+        if (completedInBlock === blockData.topics.length && blockData.topics.length > 0) {
+            document.getElementById('quiz-button-container').classList.remove('hidden');
+        } else {
+            document.getElementById('quiz-button-container').classList.add('hidden');
+        }
         navigateTo('block-view-screen');
     }
+
     function showLesson(topicId) {
         if (!progress.completedTopics.includes(topicId) && !canStartNewLesson()) return;
         appState.currentTopicId = topicId;
@@ -407,11 +477,10 @@
         renderLessonStep();
         navigateTo('lesson-screen');
     }
+
     function renderLessonStep() {
         const blockData = learningData.find(b => b.block === appState.currentBlock);
-        if (!blockData) return;
         const topicData = blockData.topics.find(t => t.id === appState.currentTopicId);
-        if (!topicData) return;
         const stepData = topicData.content[appState.currentStep];
         
         document.getElementById('lesson-title').textContent = `${topicData.icon} ${topicData.title}`;
@@ -456,29 +525,44 @@
             }, 100);
         }
     }
+
     function showDailyReading() {
+        const readingContentWrapper = document.getElementById('reading-content-wrapper');
+        const readingUnavailable = document.getElementById('reading-unavailable');
         if (canStartNewReading()) {
             const nextReading = dailyReadings.find(r => !progress.completedReadings.includes(r.id));
             if (nextReading) {
                 appState.currentReading = nextReading;
-                navigateTo('reading-screen');
+                document.getElementById('reading-title').textContent = nextReading.title;
+                document.getElementById('reading-text').textContent = nextReading.text;
+                document.getElementById('reading-image').innerHTML = nextReading.image;
+                document.getElementById('reading-speak-btn').onclick = () => speakText(nextReading.text);
+                document.getElementById('start-reading-quiz-btn').onclick = () => startReadingQuiz(nextReading);
+                readingContentWrapper.classList.remove('hidden');
+                readingUnavailable.classList.add('hidden');
             } else {
-                navigateTo('reading-screen');
-                document.getElementById('reading-unavailable').querySelector('p').textContent = "¡Has completado todas las lecturas disponibles. ¡Felicidades!";
+                readingContentWrapper.classList.add('hidden');
+                readingUnavailable.classList.remove('hidden');
+                readingUnavailable.querySelector('p').textContent = "¡Has completado todas las lecturas disponibles. ¡Felicidades!";
             }
         } else {
-            navigateTo('reading-screen');
+            readingContentWrapper.classList.add('hidden');
+            readingUnavailable.classList.remove('hidden');
         }
+        navigateTo('reading-screen');
     }
+
     function startLessonQuiz(topicId) {
         const topic = learningData.find(b => b.block === appState.currentBlock).topics.find(t => t.id === topicId);
         appState.quizContext = 'lesson';
         startQuiz(topic.lessonQuiz, `Evaluación: ${topic.title}`);
     }
+
     function startReadingQuiz(reading) {
         appState.quizContext = 'reading';
         startQuiz(reading.quiz, `Comprensión: ${reading.title}`);
     }
+
     function startBlockQuiz() {
         const blockData = learningData.find(b => b.block === appState.currentBlock);
         let allQuestions = [];
@@ -491,28 +575,23 @@
         appState.quizContext = 'block';
         startQuiz(allQuestions, `Evaluación Final: Bloque ${blockData.block}`);
     }
+    
     function startQuiz(questions, title, isRetry = false) {
         document.getElementById('quiz-main-title').textContent = title;
         if (!isRetry) {
-             appState.quizState = {
-                questions: [...questions],
-                currentQuestionIndex: 0,
-                score: 0,
-                totalQuestions: questions.length,
-                incorrectlyAnswered: [],
-                isRetry: false
-            };
+             appState.quizState = { questions: [...questions], currentQuestionIndex: 0, score: 0, totalQuestions: questions.length, incorrectlyAnswered: [], isRetry: false };
         }
-        if (!questions || questions.length === 0) {
-            console.error("Quiz started with no questions for:", title);
-            return;
-        }
+        if (!questions || questions.length === 0) { console.error("Quiz started with no questions for:", title); return; }
         renderQuizQuestion();
         navigateTo('quiz-screen');
     }
+
     function renderQuizQuestion() {
         const { questions, currentQuestionIndex, totalQuestions } = appState.quizState;
         const questionData = questions[currentQuestionIndex];
+        
+        document.getElementById('quiz-topic-title').textContent = questionData.topicTitle || '';
+        document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
         
         const fullTextToRead = `${questionData.prompt}. Las opciones son: ${questionData.options.join(', ')}`;
         document.getElementById('quiz-question-container').innerHTML = `<p id="quiz-question" class="text-xl md:text-3xl min-h-[80px] flex-grow">${questionData.prompt}</p>
@@ -520,6 +599,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
         </button>`;
 
+        document.getElementById('quiz-image-container').innerHTML = questionData.image || '';
+        
         const optionsContainer = document.getElementById('quiz-options');
         optionsContainer.innerHTML = '';
         questionData.options.forEach(option => {
@@ -529,11 +610,11 @@
             optionEl.onclick = () => selectQuizOption(optionEl, option, questionData.answer);
             optionsContainer.appendChild(optionEl);
         });
+
         document.getElementById('quiz-next-btn').classList.add('hidden');
-        setTimeout(() => {
-            speakText(fullTextToRead);
-        }, 100);
+        setTimeout(() => speakText(fullTextToRead), 100);
     }
+
     function selectQuizOption(optionEl, selectedAnswer, correctAnswer) {
         stopSpeaking();
         document.querySelectorAll('#quiz-options button').forEach(btn => {
@@ -549,6 +630,7 @@
         }
         document.getElementById('quiz-next-btn').classList.remove('hidden');
     }
+
     function nextQuizQuestion() {
         appState.quizState.currentQuestionIndex++;
         const { currentQuestionIndex, totalQuestions, incorrectlyAnswered, isRetry } = appState.quizState;
@@ -558,21 +640,14 @@
         } else {
             if (incorrectlyAnswered.length > 0 && !isRetry) {
                 alert('¡Vamos a repasar! Responde de nuevo las preguntas que se te dificultaron.');
-                appState.quizState = {
-                    ...appState.quizState,
-                    questions: [...incorrectlyAnswered],
-                    totalQuestions: incorrectlyAnswered.length,
-                    currentQuestionIndex: 0,
-                    incorrectlyAnswered: [],
-                    score: 0,
-                    isRetry: true
-                };
+                appState.quizState = { ...appState.quizState, questions: [...incorrectlyAnswered], totalQuestions: incorrectlyAnswered.length, currentQuestionIndex: 0, incorrectlyAnswered: [], score: 0, isRetry: true };
                 renderQuizQuestion();
             } else {
                 handleQuizCompletion();
             }
         }
     }
+
     function handleQuizCompletion() {
         const { score, totalQuestions } = appState.quizState;
         const success = appState.quizContext === 'block' ? true : (score === totalQuestions);
@@ -598,14 +673,42 @@
              showResults();
         }
     }
+
     function showActivityModal() {
         const topic = learningData.find(b => b.block === appState.currentBlock).topics.find(t => t.id === appState.currentTopicId);
+        document.getElementById('activity-modal-text').textContent = topic.activity;
         document.getElementById('activity-modal').classList.add('flex');
     }
+
     function showResults() {
+        const { score, totalQuestions } = appState.quizState;
+        const currentBlockNumber = appState.currentBlock;
+        document.getElementById('results-block-name').textContent = `Bloque ${currentBlockNumber}`;
+        document.getElementById('final-score').textContent = `${score}/${totalQuestions}`;
+        
+        const percentage = totalQuestions > 0 ? (score / totalQuestions) * 100 : 0;
+        let message = '';
+        if (percentage >= 80) message = '¡Eres una superestrella del conocimiento!';
+        else if (percentage >= 50) message = '¡Buen trabajo! Sigue practicando.';
+        else message = '¡No te preocupes! Repasar es parte de aprender. ¡Tú puedes!';
+        document.getElementById('final-message').textContent = message;
+        speakText(`¡Excelente trabajo! Tu puntuación final es ${score} de ${totalQuestions}. ${message}`);
         navigateTo('results-screen');
     }
+    
     function showProjects() {
+        const blockData = learningData.find(b => b.block === appState.currentBlock);
+        if (!blockData || !blockData.project) return;
+        
+        document.getElementById('project-title').textContent = blockData.project.title;
+        document.getElementById('project-description').textContent = blockData.project.description;
+        const materialsList = document.getElementById('project-materials');
+        materialsList.innerHTML = '';
+        blockData.project.materials.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            materialsList.appendChild(li);
+        });
         navigateTo('projects-screen');
     }
 
@@ -614,6 +717,7 @@
         loadProgress();
         renderWelcomeScreen();
         
+        document.getElementById('daily-reading-btn').onclick = showDailyReading;
         document.getElementById('start-block-quiz-btn').onclick = startBlockQuiz;
         document.getElementById('quiz-next-btn').onclick = nextQuizQuestion;
         document.getElementById('show-projects-btn').onclick = showProjects;
@@ -640,6 +744,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
